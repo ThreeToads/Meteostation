@@ -3,6 +3,7 @@ package com.example.esp32_ahtx2
 import android.os.Bundle
 import android.os.StrictMode
 import android.util.Log
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import okhttp3.OkHttpClient
@@ -15,6 +16,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var temperatureTextView: TextView
     private lateinit var humidityTextView: TextView
+    private lateinit var temperatureProgressBar: ProgressBar
+    private lateinit var humidityProgressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +26,8 @@ class MainActivity : AppCompatActivity() {
         // Найдем TextView для отображения температуры и влажности
         temperatureTextView = findViewById(R.id.temperatureTextView)
         humidityTextView = findViewById(R.id.humidityTextView)
-
+        temperatureProgressBar = findViewById(R.id.temperatureProgressBar)
+        humidityProgressBar = findViewById(R.id.humidityProgressBar)
         // Разрешить выполнение сетевых операций в основном потоке (не рекомендуется для production)
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
@@ -56,8 +60,17 @@ class MainActivity : AppCompatActivity() {
 
                     // Обновляем UI на основном потоке
                     runOnUiThread {
-                        temperatureTextView.text = "Temperature: ${data["temp"]}°C"
-                        humidityTextView.text = "Humidity: ${data["hum"]}%"
+                        // Обновляем текстовые поля температуры и влажности
+                        temperatureTextView.text = "${data["temp"]}°C"
+                        humidityTextView.text = "${data["hum"]}%"
+
+
+                        val temperature = data["temp"]?.toFloat() ?: 0f
+                        val humidity = data["hum"]?.toFloat() ?: 0f
+
+                        // Обновляем прогресс бары
+                        temperatureProgressBar.progress = temperature.toInt().coerceIn(0, 50)
+                        humidityProgressBar.progress = humidity.toInt().coerceIn(0, 100)
                     }
                 } else {
                     Log.e("ESP32 Response", "Response body is null")
@@ -69,6 +82,7 @@ class MainActivity : AppCompatActivity() {
             Log.e("ESP32 Request", "Failed to connect to ESP32", e)
         }
     }
+
 
     // Функция для парсинга строки вида "temp:26.81,hum:34.63"
     private fun parseESP32Response(response: String): Map<String, String> {
@@ -86,5 +100,4 @@ class MainActivity : AppCompatActivity() {
 
         return result
     }
-
 }

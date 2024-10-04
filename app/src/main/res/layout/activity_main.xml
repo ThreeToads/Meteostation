@@ -1,22 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:gravity="center">
 
+    <!-- Название приложения с кастомным шрифтом -->
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Метеостанция"
+        android:textSize="42sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/shirif"
+        android:layout_gravity="center"
+        android:paddingBottom="24dp"/>
+
+    <!-- Температура -->
+    <TextView
+        android:id="@+id/temperatureLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Температура"
+        android:textSize="24sp"
+        android:fontFamily="@font/shirif"
+        android:layout_gravity="center" />
+
+    <!-- Текст с температурой -->
     <TextView
         android:id="@+id/temperatureTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Температура: "
-        android:textSize="24sp"
-        android:layout_marginBottom="16dp"/>
+        android:text="Temperature: 0°C"
+        android:textSize="18sp"
+        android:paddingTop="8dp"
+        android:layout_gravity="center" />
 
+    <!-- Прогрессбар для температуры (градусник) -->
+    <ProgressBar
+        android:id="@+id/temperatureProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:progressDrawable="@drawable/thermometer_progress"
+        android:max="50"
+        style="?android:attr/progressBarStyleHorizontal" />
+
+
+
+
+
+    <!-- Влажность -->
+    <TextView
+        android:id="@+id/humidityLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Влажность"
+        android:textSize="24sp"
+        android:fontFamily="@font/shirif"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"/>
+
+    <!-- Текст с влажностью -->
     <TextView
         android:id="@+id/humidityTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Влажность: "
-        android:textSize="24sp"/>
+        android:text="Humidity: 0%"
+        android:textSize="18sp"
+        android:paddingTop="8dp"
+        android:layout_gravity="center" />
+
+    <!-- Прогрессбар для влажности (со значком капли) -->
+    <ProgressBar
+        android:id="@+id/humidityProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:progressDrawable="@drawable/humidity_progress"
+        android:max="100"
+        style="?android:attr/progressBarStyleHorizontal" />
+
 </LinearLayout>
