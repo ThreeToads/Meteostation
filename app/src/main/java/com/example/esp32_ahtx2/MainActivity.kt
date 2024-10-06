@@ -23,12 +23,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Найдем TextView для отображения температуры и влажности
+
         temperatureTextView = findViewById(R.id.temperatureTextView)
         humidityTextView = findViewById(R.id.humidityTextView)
         temperatureProgressBar = findViewById(R.id.temperatureProgressBar)
         humidityProgressBar = findViewById(R.id.humidityProgressBar)
-        // Разрешить выполнение сетевых операций в основном потоке (не рекомендуется для production)
+        // Разрешить выполнение сетевых операций в основном потоке
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
 
@@ -36,14 +36,14 @@ class MainActivity : AppCompatActivity() {
         thread {
             while (true) {
                 getESP32Data()
-                Thread.sleep(500) // Обновление данных каждые 5 секунд
+                Thread.sleep(500) // Обновление данных каждые 0.5 секунд
             }
         }
     }
 
     // Функция для получения данных с ESP32
     private fun getESP32Data() {
-        val url = "http://192.168.175.206/data" // Адрес вашего ESP32
+        val url = "http://192.168.175.206/data"
 
         val client = OkHttpClient()
         val request = Request.Builder().url(url).build()
